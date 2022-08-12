@@ -1,0 +1,27 @@
+# Full configuration options can be found at https://www.vaultproject.io/docs/configuration
+
+ui = true
+
+cluster_addr = "http://${node_ip}:8201"
+api_addr     = "http://${node_ip}:8200"
+
+storage "raft" {
+  node_id = "${raft_node_id}"
+  path    = "/opt/vault/data"
+  retry_join {
+    auto_join        = "provider=aws region=${awskms_region} tag_key=${raft_tag_key} tag_value=${raft_tag_value} addr_type=public_v4"
+    auto_join_scheme = "http"
+  }
+}
+
+listener "tcp" {
+  address     = "0.0.0.0:8200"
+  tls_disable = 1
+}
+
+license_path = "/etc/vault.d/vault.hclic"
+
+seal "awskms" {
+  region     = "${awskms_region}"
+  kms_key_id = "${awskms_kms_key_id}"
+}
