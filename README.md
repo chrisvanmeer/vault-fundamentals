@@ -43,7 +43,7 @@ Please fill in the following data
 
 ### `vault.hclic`
 
-Please paste your enterprise license string into this file.
+Please paste your Vault Enterprise license string into this file.
 
 ## Deploy infrastructure
 
