@@ -7,7 +7,6 @@ The following resources will be deployed in AWS:
 - 1 KMS key for auto-unseal
 - 3 EC2 instances for an HA vault cluster
 - 2 EC2 instances for replication purposes
-- 1 EC2 instance for a webserver (currently disabled)
 
 Please note that
 
@@ -18,11 +17,33 @@ Please note that
 
 ## Pre-requisites
 
-Please copy the following files to user-defined ones and fill in the blanks.
+Follow the steps below, if you have missing data, the deployment will fail.
+
+### File creation
+
+Perform the following command to create new user-defined files.
 
 ```bash
 for i in *.example; do cp -a $i ${i%%.example}; done
 ```
+
+### terraform.tfvars
+
+Please fill in the following data
+
+- AWS Account ID
+- AWS IAM user
+
+### vault.env
+
+Please fill in the following data
+
+- AWS Access Key ID
+- AWS Secret Access Key
+
+### vault.hclic
+
+Please paste your enterprise license string into this file.
 
 ## Deploy infrastructure
 
