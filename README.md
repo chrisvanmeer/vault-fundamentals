@@ -97,30 +97,36 @@ Here are some code snippets that will help you guide the demo environment for th
        capabilities = ["read"]
      }
      EOF
+     ```
+
+     ```bash
+     cat > payload.json -<<EOF
+     {
+       "list": [
+         "Ad Thiers",
+         "Chris Tevel",
+         "Chris van Meer",
+         "Danny Kip",
+         "Dennis Kruyt",
+         "Gerlof Langeveld",
+         "Koert Gielen",
+         "Marcel Kornegoor",
+         "Michael Trip",
+         "Rens Sikma",
+         "Richard Schutte",
+         "Stefan Joosten",
+         "Ton Kersten",
+         "Vincent Lamers",
+         "Winfried de Heiden - Voorwinde"
+       ]
+     }
+     EOF
+     ```
+
+     ```bash
      vault auth enable userpass
      vault write auth/userpass/users/`whoami` policies=consultants-policy password=vault
      vault secrets enable -version=2 kv
-     cat > payload.json -<<EOF
-      {
-        "list": [
-          "Ad Thiers",
-          "Chris Tevel",
-          "Chris van Meer",
-          "Danny Kip",
-          "Dennis Kruyt",
-          "Gerlof Langeveld",
-          "Koert Gielen",
-          "Marcel Kornegoor",
-          "Michael Trip",
-          "Rens Sikma",
-          "Richard Schutte",
-          "Stefan Joosten",
-          "Ton Kersten",
-          "Vincent Lamers",
-          "Winfried de Heiden - Voorwinde"
-        ]
-      }
-     EOF
      vault kv put kv/consultants @payload.json
      ```
 
