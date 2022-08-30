@@ -1,0 +1,32 @@
+#!/bin/bash
+
+function has-session {
+  tmux has-session -t vault 2>/dev/null
+}
+
+if has-session ; then
+  echo "Session already exists"
+else
+  tmux new-session -d -s vault
+  tmux rename-window -t 0 'active'
+  tmux select-pane -T 'node01'
+  tmux new-window -n 'standby'
+  tmux select-pane -T 'node02'
+  tmux split-window -h
+  tmux select-pane -T 'node03'
+  tmux new-window -n 'replication'
+  tmux select-pane -T 'repl01'
+  tmux split-window -h
+  tmux select-pane -T 'repl02'
+  tmux select-window -t 2
+  tmux select-pane -t 0
+  tmux send-keys -t 0 'ssh -o StrictHostKeyChecking=no ubuntu@${repl01}' C-m C-l
+  tmux send-keys -t 1 'ssh -o StrictHostKeyChecking=no ubuntu@${repl02}' C-m C-l
+  tmux select-window -t 1
+  tmux select-pane -t 0
+  tmux send-keys -t 0 'ssh -o StrictHostKeyChecking=no ubuntu@${node02}' C-m C-l
+  tmux send-keys -t 1 'ssh -o StrictHostKeyChecking=no ubuntu@${node03}' C-m C-l
+  tmux select-window -t 0
+  tmux send-keys -t 0 'ssh -o StrictHostKeyChecking=no ubuntu@${node01}' C-m C-l
+  tmux attach-session -d
+fi

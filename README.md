@@ -51,8 +51,12 @@ Please paste your Vault Enterprise license string into this file.
 terraform init && terraform apply
 ```
 
-After that you will be presented with a list of names and IP addresses of the provisioned instances.
+After that you will be presented with a list of names and IP addresses of the provisioned instances.  
+If you want, you can use a pre-configured `tmux` startup file to connect to all the nodes.
 
+```bash
+bash vault-tmux.sh
+```
 
 ## Demo guidelines
 
