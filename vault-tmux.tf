@@ -8,5 +8,5 @@ resource "local_file" "tmux" {
       repl02 = aws_instance.vault_replication[1].public_dns
     }
   )
-  filename = "vault-tmux.sh"
+  filename = "./vault-tmux.sh"
 }
