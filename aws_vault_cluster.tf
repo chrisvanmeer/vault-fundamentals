@@ -66,7 +66,6 @@ resource "aws_instance" "vault_cluster" {
       "sudo mv ${var.vault_enterprise_license_destination} /etc/vault.d/vault.hclic",
       "sudo mv ${var.vault_env_file_destination} /etc/vault.d/vault.env",
       "sudo mv ${var.vault_config_file_destination} /etc/vault.d/vault.hcl",
-      "sudo service vault start",
       "echo \"export VAULT_ADDR=http://127.0.0.1:8200\" >> /home/ubuntu/.bashrc"
     ]
 
