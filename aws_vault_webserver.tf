@@ -21,3 +21,10 @@
 #   }
 # }
 
+# output "vault_webserver" {
+#   value = formatlist(
+#     "%s => %s",
+#     aws_instance.vault_webserver.tags.Name,
+#     aws_instance.vault_webserver.public_ip
+#   )
+# }

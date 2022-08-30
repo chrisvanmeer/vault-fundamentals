@@ -78,3 +78,11 @@ resource "aws_instance" "vault_cluster" {
     }
   }
 }
+
+output "vault_cluster" {
+  value = formatlist(
+    "%s => %s",
+    aws_instance.vault_cluster[*].tags.Name,
+    aws_instance.vault_cluster[*].public_ip
+  )
+}

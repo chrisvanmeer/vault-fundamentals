@@ -75,3 +75,11 @@ resource "aws_instance" "vault_replication" {
     }
   }
 }
+
+output "vault_replication" {
+  value = formatlist(
+    "%s => %s",
+    aws_instance.vault_replication[*].tags.Name,
+    aws_instance.vault_replication[*].public_ip
+  )
+}
