@@ -27,21 +27,21 @@ Perform the following command to create new user-defined files.
 for i in *.example; do cp -a $i ${i%%.example}; done
 ```
 
-### terraform.tfvars
+### `terraform.tfvars`
 
 Please fill in the following data
 
 - AWS Account ID
 - AWS IAM user
 
-### vault.env
+### `vault.env`
 
 Please fill in the following data
 
 - AWS Access Key ID
 - AWS Secret Access Key
 
-### vault.hclic
+### `vault.hclic`
 
 Please paste your enterprise license string into this file.
 
