@@ -4,8 +4,8 @@ resource "aws_instance" "vault_cluster" {
   key_name      = aws_key_pair.key.key_name
   count         = var.aws_instance_cluster_count
   tags = {
-    Name                              = "vault-fundamentals-node-${format("%02d", count.index + 1)}",
-    "${var.vault_aws_unseal_tag_key}" = "${var.vault_aws_unseal_tag_value}"
+    Name                         = "vault-fundamentals-node-${format("%02d", count.index + 1)}",
+    var.vault_aws_unseal_tag_key = var.vault_aws_unseal_tag_value
   }
 
   provisioner "file" {
