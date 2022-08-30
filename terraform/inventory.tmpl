@@ -1,0 +1,9 @@
+[vault_cluster]
+%{ for name, ip in vault_cluster ~}
+${name} ansible_host=${ip}
+%{ endfor ~}
+
+[vault_replication]
+%{ for name, ip in vault_replication ~}
+${name} ansible_host=${ip}
+%{ endfor ~}
