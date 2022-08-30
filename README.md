@@ -55,11 +55,11 @@ Here are some code snippets that will help you guide the demo environment for th
 
 3. On `vault-fundamentals-node-1`, perform the following:
 
-  ```bash
-  vault operator raft list-peers
-  vault operator step-down
-  vault operator raft list-peers
-  ```
+     ```bash
+     vault operator raft list-peers
+     vault operator step-down
+     vault operator raft list-peers
+     ```
 
 ### Replication
 
@@ -67,41 +67,41 @@ Here are some code snippets that will help you guide the demo environment for th
 
 1. On `vault-fundamentals-node-1`, perform the following:
 
-  ```bash
-  vault read sys/replication/performance/status
-  vault write -f sys/replication/performance/primary/enable
-  vault read sys/replication/performance/status
-  vault write -f sys/replication/performance/primary/secondary-token id=performance-node
-  ```
+     ```bash
+     vault read sys/replication/performance/status
+     vault write -f sys/replication/performance/primary/enable
+     vault read sys/replication/performance/status
+     vault write -f sys/replication/performance/primary/secondary-token id=performance-node
+     ```
 
 2. On `vault-fundamentals-replication-1`, perform the following:
 
-  ```bash
-  sudo service vault start && vault operator init -recovery-shares=1 -recovery-threshold=1 | tee vault.creds | awk '/Initial Root Token:/ { print $4 }' | vault login -
-  vault read sys/replication/performance/status
-  vault write -f sys/replication/performance/secondary/enable token=<token from `vault-fundamentals-node-1`>
-  vault read sys/replication/performance/status
-  ```
+     ```bash
+     sudo service vault start && vault operator init -recovery-shares=1 -recovery-threshold=1 | tee vault.creds | awk '/Initial Root Token:/ { print $4 }' | vault login -
+     vault read sys/replication/performance/status
+     vault write -f sys/replication/performance/secondary/enable token=<token from `vault-fundamentals-node-1`>
+     vault read sys/replication/performance/status
+     ```
 
 #### Disaster recovery
 
 1. On `vault-fundamentals-node-1`, perform the following:
 
-  ```bash
-  vault read sys/replication/dr/status
-  vault write -f sys/replication/dr/primary/enable
-  vault read sys/replication/dr/status
-  vault write -f sys/replication/dr/primary/secondary-token id=dr-node
-  ```
+     ```bash
+     vault read sys/replication/dr/status
+     vault write -f sys/replication/dr/primary/enable
+     vault read sys/replication/dr/status
+     vault write -f sys/replication/dr/primary/secondary-token id=dr-node
+     ```
 
 2. On `vault-fundamentals-replication-2`, perform the following:
 
-  ```bash
-  sudo service vault start && vault operator init -recovery-shares=1 -recovery-threshold=1 | tee vault.creds | awk '/Initial Root Token:/ { print $4 }' | vault login -
-  vault read sys/replication/dr/status
-  vault write -f sys/replication/dr/secondary/enable token=<token from `vault-fundamentals-node-1`>
-  vault read sys/replication/dr/status
-  ```
+     ```bash
+     sudo service vault start && vault operator init -recovery-shares=1 -recovery-threshold=1 | tee vault.creds | awk '/Initial Root Token:/ { print $4 }' | vault login -
+     vault read sys/replication/dr/status
+     vault write -f sys/replication/dr/secondary/enable token=<token from `vault-fundamentals-node-1`>
+     vault read sys/replication/dr/status
+     ```
 
 ## Destroy infrastructure
 
