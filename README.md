@@ -86,6 +86,44 @@ Here are some code snippets that will help you guide the demo environment for th
      vault operator raft list-peers
      ```
 
+
+### Populate
+
+1. On any of the nodes, perform:
+
+     ```bash
+     vault policy write consultants-policy -<<EOF
+     path "kv/data/consultants" {
+       capabilities = ["read"]
+     }
+     EOF
+     vault auth enable userpass
+     vault write auth/userpass/users/`whoami` policies=consultants-policy password=vault
+     vault secrets enable -version=2 kv
+     cat > payload.json -<<EOF
+      {
+        "list": [
+          "Ad Thiers",
+          "Chris Tevel",
+          "Chris van Meer",
+          "Danny Kip",
+          "Dennis Kruyt",
+          "Gerlof Langeveld",
+          "Koert Gielen",
+          "Marcel Kornegoor",
+          "Michael Trip",
+          "Rens Sikma",
+          "Richard Schutte",
+          "Stefan Joosten",
+          "Ton Kersten",
+          "Vincent Lamers",
+          "Winfried de Heiden - Voorwinde"
+        ]
+      }
+     EOF
+     vault kv put kv/consultants @payload.json
+     ```
+
 ### Replication
 
 #### Performance replication
