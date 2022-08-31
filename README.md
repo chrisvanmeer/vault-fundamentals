@@ -69,6 +69,27 @@ If you want, you can use a pre-configured `tmux` startup file to connect to all 
 bash vault-tmux.sh
 ```
 
+Tmux will be started with the following configuration:
+
+```text
+┌────────────────────────────────────────────────┐  ┌────────────────────────┬───────────────────────┐  ┌────────────────────────┬───────────────────────┐
+│ node01                                         │  │ node02                 │ node03                │  │ repl01                 │ repl02                │
+│                                                │  │                        │                       │  │                        │                       │
+│                                                │  │                        │                       │  │                        │                       │
+│                                                │  │                        │                       │  │                        │                       │
+│                                                │  │                        │                       │  │                        │                       │
+│                                                │  │                        │                       │  │                        │                       │
+│                                                │  │                synchronized-panes              │  │                        │                       │
+│                                                │  │                        │                       │  │                        │                       │
+│                                                │  │                        │                       │  │                        │                       │
+│                                                │  │                        │                       │  │                        │                       │
+│                                                │  │                        │                       │  │                        │                       │
+│                                                │  │                        │                       │  │                        │                       │
+│                                                │  │                        │                       │  │                        │                       │
+└────────────────────────────────────────────────┘  └────────────────────────┴───────────────────────┘  └────────────────────────┴───────────────────────┘
+                 Window 0: active                                    Window 1: standby                                Window 2: replication
+```
+
 ## Demo guidelines
 
 Here are some code snippets that will help you guide the demo environment for the following purposes
