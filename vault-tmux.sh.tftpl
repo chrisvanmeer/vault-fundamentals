@@ -26,6 +26,7 @@ else
   tmux select-pane -t 0
   tmux send-keys -t 0 'ssh -o StrictHostKeyChecking=no ubuntu@${node02}' C-m C-l
   tmux send-keys -t 1 'ssh -o StrictHostKeyChecking=no ubuntu@${node03}' C-m C-l
+  tmux set-window-option synchronize-panes on > /dev/null
   tmux select-window -t 0
   tmux send-keys -t 0 'ssh -o StrictHostKeyChecking=no ubuntu@${node01}' C-m C-l
   tmux attach-session -d
