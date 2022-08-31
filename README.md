@@ -1,6 +1,7 @@
 # Vault Fundamentals
 
 This repository is to deploy a demo environment for the Vault Fundamentals training / workshop.  
+For this demo environment, you will **need a valid Vault Enterprise license key** for this to work.  
 The following resources will be deployed in AWS:
 
 - 1 SSH key-pair
@@ -28,7 +29,7 @@ git clone https://github.com/chrisvanmeer/vault-fundamentals.git
 cd vault-fundamentals
 ```
 
-**If don't have all of this information, the deployment will fail.**
+**If you don't have all of this information, the deployment will fail.**
 
 ### File creation
 
