@@ -75,21 +75,21 @@ Here are some code snippets that will help you guide the demo environment for th
 
 ### HA
 
-1. On `vault-fundamentals-node-1`, perform the following:
+1. On `vault-fundamentals-node-01`, perform the following:
 
    ```bash
    sudo service vault start && vault operator init -recovery-shares=1 -recovery-threshold=1 | tee vault.creds | awk '/Initial Root Token:/ { print $4 }' | vault login -
    echo "Recovery Key for nodes 2 and 3 is: " `awk '/Recovery Key 1/ { print $4 }' vault.creds`
    ```
 
-2. On `vault-fundamentals-node-2` and `vault-fundamentals-node-3`, perform the following
+2. On `vault-fundamentals-node-02` and `vault-fundamentals-node-03`, perform the following
 
    ```bash
    sudo service vault start
    vault operator unseal
     ```
 
-3. On `vault-fundamentals-node-1`, perform the following:
+3. On `vault-fundamentals-node-01`, perform the following:
 
      ```bash
      vault operator raft list-peers
@@ -99,7 +99,7 @@ Here are some code snippets that will help you guide the demo environment for th
 
 ### Populate
 
-1. On `vault-fundamentals-node-1`, perform the following:
+1. On `vault-fundamentals-node-01`, perform the following:
 
      ```bash
      vault policy write consultants-policy -<<EOF
@@ -144,7 +144,7 @@ Here are some code snippets that will help you guide the demo environment for th
 
 #### Performance replication
 
-1. On `vault-fundamentals-node-1`, perform the following:
+1. On `vault-fundamentals-node-01`, perform the following:
 
      ```bash
      vault read sys/replication/performance/status
@@ -153,18 +153,18 @@ Here are some code snippets that will help you guide the demo environment for th
      vault write -f sys/replication/performance/primary/secondary-token id=performance-node
      ```
 
-2. On `vault-fundamentals-repl-1`, perform the following:
+2. On `vault-fundamentals-repl-01`, perform the following:
 
      ```bash
      sudo service vault start && vault operator init -recovery-shares=1 -recovery-threshold=1 | tee vault.creds | awk '/Initial Root Token:/ { print $4 }' | vault login -
      vault read sys/replication/performance/status
-     vault write -f sys/replication/performance/secondary/enable token=<token from `vault-fundamentals-node-1`>
+     vault write -f sys/replication/performance/secondary/enable token=<token from `vault-fundamentals-node-01`>
      vault read sys/replication/performance/status
      ```
 
 #### Disaster recovery
 
-1. On `vault-fundamentals-node-1`, perform the following:
+1. On `vault-fundamentals-node-01`, perform the following:
 
      ```bash
      vault read sys/replication/dr/status
@@ -173,12 +173,12 @@ Here are some code snippets that will help you guide the demo environment for th
      vault write -f sys/replication/dr/primary/secondary-token id=dr-node
      ```
 
-2. On `vault-fundamentals-repl-2`, perform the following:
+2. On `vault-fundamentals-repl-02`, perform the following:
 
      ```bash
      sudo service vault start && vault operator init -recovery-shares=1 -recovery-threshold=1 | tee vault.creds | awk '/Initial Root Token:/ { print $4 }' | vault login -
      vault read sys/replication/dr/status
-     vault write -f sys/replication/dr/secondary/enable token=<token from `vault-fundamentals-node-1`>
+     vault write -f sys/replication/dr/secondary/enable token=<token from `vault-fundamentals-node-01`>
      vault read sys/replication/dr/status
      ```
 
