@@ -4,7 +4,7 @@ resource "aws_instance" "vault_replication" {
   key_name      = aws_key_pair.key.key_name
   count         = var.aws_instance_replication_count
   tags = {
-    Name = "vault-fundamentals-repl-${format("%02d", count.index + 1)}",
+    Name = "vrepl${format("%02d", count.index + 1)}",
   }
 
   provisioner "file" {

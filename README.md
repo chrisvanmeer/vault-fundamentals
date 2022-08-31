@@ -5,8 +5,8 @@ The following resources will be deployed in AWS:
 
 - 1 SSH key-pair
 - 1 KMS key for auto-unseal
-- 3 EC2 instances for an HA vault cluster
-- 3 EC2 instances for replication purposes
+- 3 EC2 instances for an HA vault cluster (hostname vnode##)
+- 3 EC2 instances for replication purposes (hostname vrepl##)
 
 Please note that
 
@@ -73,7 +73,7 @@ bash vault-tmux.sh
 
 ```text
 ┌────────────────────────────────────────────────┐  ┌────────────────────────┬───────────────────────┐  ┌────────────────────────┬───────────────────────┐
-│ node01                                         │  │ node02                 │ node03                │  │ repl02                 │ repl03                │
+│ vnode01                                        │  │ vnode02                │ vnode03               │  │ vrepl02                │ vrepl03               │
 │                                                │  │                        │                       │  │                        │                       │
 │                                                │  │                        │                       │  │                        │                       │
 │                                                │  │                        │                       │  │                        │                       │
@@ -96,21 +96,21 @@ Here are some code snippets that will help you guide the demo environment for th
 
 ### HA
 
-1. On `vault-fundamentals-node-01`, perform the following:
+1. On `vnode01`, perform the following:
 
    ```bash
    sudo service vault start && vault operator init -recovery-shares=1 -recovery-threshold=1 | tee vault.creds | awk '/Initial Root Token:/ { print $4 }' | vault login -
-   echo "Recovery Key for nodes 2 and 3 is: " `awk '/Recovery Key 1/ { print $4 }' vault.creds`
+   echo "Recovery Key for vnodes 2 and 3 is: " `awk '/Recovery Key 1/ { print $4 }' vault.creds`
    ```
 
-2. On `vault-fundamentals-node-02` and `vault-fundamentals-node-03`, perform the following
+2. On `vnode02` and `vnode03`, perform the following
 
    ```bash
    sudo service vault start
    vault operator unseal
     ```
 
-3. On `vault-fundamentals-node-01`, perform the following:
+3. On `vnode01`, perform the following:
 
      ```bash
      vault operator raft list-peers
@@ -120,7 +120,7 @@ Here are some code snippets that will help you guide the demo environment for th
 
 ### Populate
 
-1. On `vault-fundamentals-node-01`, perform the following:
+1. On `vnode01`, perform the following:
 
      ```bash
      vault policy write consultants-policy -<<EOF
@@ -166,7 +166,7 @@ Here are some code snippets that will help you guide the demo environment for th
 
 #### Disaster recovery ( Netherlands )
 
-1. On `vault-fundamentals-node-01`, perform the following:
+1. On `vnode01`, perform the following:
 
      ```bash
      vault read sys/replication/dr/status
@@ -180,13 +180,13 @@ Here are some code snippets that will help you guide the demo environment for th
      ```bash
      sudo service vault start && vault operator init -recovery-shares=1 -recovery-threshold=1 | tee vault.creds | awk '/Initial Root Token:/ { print $4 }' | vault login -
      vault read sys/replication/dr/status
-     vault write -f sys/replication/dr/secondary/enable token=<token from `vault-fundamentals-node-01`>
+     vault write -f sys/replication/dr/secondary/enable token=<token from `vnode01`>
      vault read sys/replication/dr/status
      ```
 
 #### Performance replication ( Germany )
 
-1. On `vault-fundamentals-node-01`, perform the following:
+1. On `vnode01`, perform the following:
 
      ```bash
      vault read sys/replication/performance/status
@@ -200,7 +200,7 @@ Here are some code snippets that will help you guide the demo environment for th
      ```bash
      sudo service vault start && vault operator init -recovery-shares=1 -recovery-threshold=1 | tee vault.creds | awk '/Initial Root Token:/ { print $4 }' | vault login -
      vault read sys/replication/performance/status
-     vault write -f sys/replication/performance/secondary/enable token=<token from `vault-fundamentals-node-01`>
+     vault write -f sys/replication/performance/secondary/enable token=<token from `vnode01`>
      vault read sys/replication/performance/status
      ```
 
@@ -220,7 +220,7 @@ Here are some code snippets that will help you guide the demo environment for th
      ```bash
      sudo service vault start && vault operator init -recovery-shares=1 -recovery-threshold=1 | tee vault.creds | awk '/Initial Root Token:/ { print $4 }' | vault login -
      vault read sys/replication/dr/status
-     vault write -f sys/replication/dr/secondary/enable token=<token from `vault-fundamentals-node-01`>
+     vault write -f sys/replication/dr/secondary/enable token=<token from `vnode01`>
      vault read sys/replication/dr/status
      ```
 

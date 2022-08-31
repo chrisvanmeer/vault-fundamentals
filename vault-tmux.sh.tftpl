@@ -9,25 +9,25 @@ if has-session ; then
 else
   tmux new-session -d -s vault
   tmux rename-window -t 0 'active'
-  tmux select-pane -T 'node01'
+  tmux select-pane -T 'vnode01'
   tmux new-window -n 'standby'
-  tmux select-pane -T 'node02'
+  tmux select-pane -T 'vnode02'
   tmux split-window -h
-  tmux select-pane -T 'node03'
+  tmux select-pane -T 'vnode03'
   tmux new-window -n 'replication'
-  tmux select-pane -T 'repl02'
+  tmux select-pane -T 'vrepl02'
   tmux split-window -h
-  tmux select-pane -T 'repl03'
+  tmux select-pane -T 'vrepl03'
   tmux select-window -t 2
   tmux select-pane -t 0
-  tmux send-keys -t 0 'ssh -o StrictHostKeyChecking=no ubuntu@${repl03}' C-m C-l
-  tmux send-keys -t 1 'ssh -o StrictHostKeyChecking=no ubuntu@${repl04}' C-m C-l
+  tmux send-keys -t 0 'ssh -o StrictHostKeyChecking=no ubuntu@${vrepl03}' C-m C-l
+  tmux send-keys -t 1 'ssh -o StrictHostKeyChecking=no ubuntu@${vrepl04}' C-m C-l
   tmux select-window -t 1
   tmux select-pane -t 0
-  tmux send-keys -t 0 'ssh -o StrictHostKeyChecking=no ubuntu@${node02}' C-m C-l
-  tmux send-keys -t 1 'ssh -o StrictHostKeyChecking=no ubuntu@${node03}' C-m C-l
+  tmux send-keys -t 0 'ssh -o StrictHostKeyChecking=no ubuntu@${vnode02}' C-m C-l
+  tmux send-keys -t 1 'ssh -o StrictHostKeyChecking=no ubuntu@${vnode03}' C-m C-l
   tmux set-window-option synchronize-panes on > /dev/null
   tmux select-window -t 0
-  tmux send-keys -t 0 'ssh -o StrictHostKeyChecking=no ubuntu@${node01}' C-m C-l
+  tmux send-keys -t 0 'ssh -o StrictHostKeyChecking=no ubuntu@${vnode01}' C-m C-l
   tmux attach-session -d
 fi
