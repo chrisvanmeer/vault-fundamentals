@@ -86,7 +86,6 @@ Here are some code snippets that will help you guide the demo environment for th
      vault operator raft list-peers
      ```
 
-
 ### Populate
 
 1. On any of the nodes, perform:
