@@ -17,7 +17,17 @@ Please note that
 
 ## Pre-requisites
 
-Follow the steps below.  
+**Follow the steps below.**
+
+### Clone
+
+Perform the following command to clone the repository to local disk.
+
+```bash
+git clone https://github.com/chrisvanmeer/vault-fundamentals.git
+cd vault-fundamentals
+```
+
 **If don't have all of this information, the deployment will fail.**
 
 ### File creation
