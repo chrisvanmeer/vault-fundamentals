@@ -69,7 +69,7 @@ If you want, you can use a pre-configured `tmux` startup file to connect to all 
 bash vault-tmux.sh
 ```
 
-Tmux will be started with the following configuration:
+`tmux` will be started with the following configuration:
 
 ```text
 ┌────────────────────────────────────────────────┐  ┌────────────────────────┬───────────────────────┐  ┌────────────────────────┬───────────────────────┐
