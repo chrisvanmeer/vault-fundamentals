@@ -79,7 +79,7 @@ bash vault-tmux.sh
 │                                                │  │                        │                       │  │                        │                       │
 │                                                │  │                        │                       │  │                        │                       │
 │                                                │  │                        │                       │  │                        │                       │
-│                                                │  │                synchronized-panes              │  │                        │                       │
+│                                                │  │               synchronized-panes               │  │                        │                       │
 │                                                │  │                        │                       │  │                        │                       │
 │                                                │  │                        │                       │  │                        │                       │
 │                                                │  │                        │                       │  │                        │                       │
