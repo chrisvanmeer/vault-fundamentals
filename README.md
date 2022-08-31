@@ -17,7 +17,7 @@ Please note that
 
 ## Pre-requisites
 
-Follow the steps below, if you have missing data, the deployment will fail.
+Follow the steps below, **if don't have all of this information, the deployment will fail.**
 
 ### File creation
 
