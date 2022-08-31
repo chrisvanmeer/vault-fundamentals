@@ -6,7 +6,7 @@ The following resources will be deployed in AWS:
 - 1 SSH key-pair
 - 1 KMS key for auto-unseal
 - 3 EC2 instances for an HA vault cluster
-- 2 EC2 instances for replication purposes
+- 3 EC2 instances for replication purposes
 
 Please note that
 
