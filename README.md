@@ -73,7 +73,7 @@ bash vault-tmux.sh
 
 ```text
 ┌────────────────────────────────────────────────┐  ┌────────────────────────┬───────────────────────┐  ┌────────────────────────┬───────────────────────┐
-│ node01                                         │  │ node02                 │ node03                │  │ repl01                 │ repl02                │
+│ node01                                         │  │ node02                 │ node03                │  │ repl02                 │ repl03                │
 │                                                │  │                        │                       │  │                        │                       │
 │                                                │  │                        │                       │  │                        │                       │
 │                                                │  │                        │                       │  │                        │                       │
@@ -164,7 +164,27 @@ Here are some code snippets that will help you guide the demo environment for th
 
 ### Replication
 
-#### Performance replication
+#### Disaster recovery ( Netherlands )
+
+1. On `vault-fundamentals-node-01`, perform the following:
+
+     ```bash
+     vault read sys/replication/dr/status
+     vault write -f sys/replication/dr/primary/enable
+     vault read sys/replication/dr/status
+     vault write -f sys/replication/dr/primary/secondary-token id=dr-repl01
+     ```
+
+2. On `vault-fundamentals-repl-01`, perform the following:
+
+     ```bash
+     sudo service vault start && vault operator init -recovery-shares=1 -recovery-threshold=1 | tee vault.creds | awk '/Initial Root Token:/ { print $4 }' | vault login -
+     vault read sys/replication/dr/status
+     vault write -f sys/replication/dr/secondary/enable token=<token from `vault-fundamentals-node-01`>
+     vault read sys/replication/dr/status
+     ```
+
+#### Performance replication ( Germany )
 
 1. On `vault-fundamentals-node-01`, perform the following:
 
@@ -172,10 +192,10 @@ Here are some code snippets that will help you guide the demo environment for th
      vault read sys/replication/performance/status
      vault write -f sys/replication/performance/primary/enable
      vault read sys/replication/performance/status
-     vault write -f sys/replication/performance/primary/secondary-token id=performance-node
+     vault write -f sys/replication/performance/primary/secondary-token id=pr-repl02
      ```
 
-2. On `vault-fundamentals-repl-01`, perform the following:
+2. On `vault-fundamentals-repl-02`, perform the following:
 
      ```bash
      sudo service vault start && vault operator init -recovery-shares=1 -recovery-threshold=1 | tee vault.creds | awk '/Initial Root Token:/ { print $4 }' | vault login -
@@ -184,18 +204,18 @@ Here are some code snippets that will help you guide the demo environment for th
      vault read sys/replication/performance/status
      ```
 
-#### Disaster recovery
+#### Disaster recovery - from Performance secondary ( Germany )
 
-1. On `vault-fundamentals-node-01`, perform the following:
+1. On `vault-fundamentals-repl-02`, perform the following:
 
      ```bash
      vault read sys/replication/dr/status
      vault write -f sys/replication/dr/primary/enable
      vault read sys/replication/dr/status
-     vault write -f sys/replication/dr/primary/secondary-token id=dr-node
+     vault write -f sys/replication/dr/primary/secondary-token id=dr-repl03
      ```
 
-2. On `vault-fundamentals-repl-02`, perform the following:
+2. On `vault-fundamentals-repl-03`, perform the following:
 
      ```bash
      sudo service vault start && vault operator init -recovery-shares=1 -recovery-threshold=1 | tee vault.creds | awk '/Initial Root Token:/ { print $4 }' | vault login -
