@@ -125,6 +125,7 @@ Here are some code snippets that will help you guide the demo environment for th
          "Rens Sikma",
          "Richard Schutte",
          "Stefan Joosten",
+         "Sven Kappers",
          "Ton Kersten",
          "Vincent Lamers",
          "Winfried de Heiden - Voorwinde"
