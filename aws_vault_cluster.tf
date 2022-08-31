@@ -82,6 +82,6 @@ output "vault_cluster" {
   value = formatlist(
     "%s => %s",
     aws_instance.vault_cluster[*].tags.Name,
-    aws_instance.vault_cluster[*].public_ip
+    aws_instance.vault_cluster[*].public_dns
   )
 }

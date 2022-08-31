@@ -12,12 +12,13 @@ Please note that
 
 - All Vault instances will be provisioned with Vault Enterprise, including a config file, NFR license and a .env file containing AWS credentials.
 - All Vault instances will be in an uninitialized and sealed state.
-- All Vault services will not be started at system startup.
-- The 3-node Vault cluster will be provisioned with tags to leverage the auto_join capabilities and is included in the config file.
+- All Vault services will have to be started manually.
+- The 3-node Vault cluster EC2 instances will be provisioned with a tag to leverage the auto_join capabilities and is included in the config file.
 
 ## Pre-requisites
 
-Follow the steps below, **if don't have all of this information, the deployment will fail.**
+Follow the steps below.  
+**If don't have all of this information, the deployment will fail.**
 
 ### File creation
 
@@ -88,7 +89,7 @@ Here are some code snippets that will help you guide the demo environment for th
 
 ### Populate
 
-1. On any of the nodes, perform:
+1. On `vault-fundamentals-node-1`, perform the following:
 
      ```bash
      vault policy write consultants-policy -<<EOF
@@ -142,7 +143,7 @@ Here are some code snippets that will help you guide the demo environment for th
      vault write -f sys/replication/performance/primary/secondary-token id=performance-node
      ```
 
-2. On `vault-fundamentals-replication-1`, perform the following:
+2. On `vault-fundamentals-repl-1`, perform the following:
 
      ```bash
      sudo service vault start && vault operator init -recovery-shares=1 -recovery-threshold=1 | tee vault.creds | awk '/Initial Root Token:/ { print $4 }' | vault login -
@@ -162,7 +163,7 @@ Here are some code snippets that will help you guide the demo environment for th
      vault write -f sys/replication/dr/primary/secondary-token id=dr-node
      ```
 
-2. On `vault-fundamentals-replication-2`, perform the following:
+2. On `vault-fundamentals-repl-2`, perform the following:
 
      ```bash
      sudo service vault start && vault operator init -recovery-shares=1 -recovery-threshold=1 | tee vault.creds | awk '/Initial Root Token:/ { print $4 }' | vault login -
