@@ -15,13 +15,13 @@ else
   tmux split-window -h
   tmux select-pane -T 'node03'
   tmux new-window -n 'replication'
-  tmux select-pane -T 'repl01'
-  tmux split-window -h
   tmux select-pane -T 'repl02'
+  tmux split-window -h
+  tmux select-pane -T 'repl03'
   tmux select-window -t 2
   tmux select-pane -t 0
-  tmux send-keys -t 0 'ssh -o StrictHostKeyChecking=no ubuntu@${repl01}' C-m C-l
-  tmux send-keys -t 1 'ssh -o StrictHostKeyChecking=no ubuntu@${repl02}' C-m C-l
+  tmux send-keys -t 0 'ssh -o StrictHostKeyChecking=no ubuntu@${repl03}' C-m C-l
+  tmux send-keys -t 1 'ssh -o StrictHostKeyChecking=no ubuntu@${repl04}' C-m C-l
   tmux select-window -t 1
   tmux select-pane -t 0
   tmux send-keys -t 0 'ssh -o StrictHostKeyChecking=no ubuntu@${node02}' C-m C-l

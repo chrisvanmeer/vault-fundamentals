@@ -33,7 +33,7 @@ variable "aws_instance_cluster_count" {
 
 variable "aws_instance_replication_count" {
   type    = number
-  default = 2
+  default = 3
 }
 
 variable "aws_instance_type" {
