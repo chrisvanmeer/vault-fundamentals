@@ -13,7 +13,7 @@ Please note that
 - All Vault instances will be provisioned with Vault Enterprise, including a config file, NFR license and a .env file containing AWS credentials.
 - All Vault instances will be in an uninitialized and sealed state.
 - All Vault services will have to be started manually.
-- The 3-node Vault cluster EC2 instances will be provisioned with a tag to leverage the auto_join capabilities and is included in the config file.
+- The EC2 instances for the 3-node Vault cluster will be provisioned with a specific tag to leverage the auto_join capabilities and is included in the config file.
 
 ## Pre-requisites
 
