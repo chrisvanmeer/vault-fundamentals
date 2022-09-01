@@ -147,6 +147,14 @@ Here are some code snippets that will help you guide the demo environment for th
      ```
 
      ```bash
+     vault policy write admin-policy -<<EOF
+     path "*" {
+       capabilities = ["create","read","update","delete","list","sudo]
+     }
+     EOF
+     ```
+
+     ```bash
      cat > payload.json -<<EOF
      {
        "list": [
@@ -173,7 +181,7 @@ Here are some code snippets that will help you guide the demo environment for th
 
      ```bash
      vault auth enable userpass
-     vault write auth/userpass/users/`whoami` policies=consultants-policy password=vault
+     vault write auth/userpass/users/admin policies=admin-policy password=vault
      vault secrets enable -version=2 kv
      vault kv put kv/consultants @payload.json
      ```
