@@ -3,14 +3,14 @@ resource "aws_security_group" "vault_sg" {
   description = "Allow Vault traffic"
 
   ingress {
-    description = "Vault Traffic"
+    description = "Vault API and cluster traffic"
     from_port   = 8200
     to_port     = 8201
     protocol    = "tcp"
   }
 
   ingress {
-    description = "SSH Traffic"
+    description = "SSH traffic"
     from_port   = 22
     to_port     = 22
     protocol    = "tcp"
