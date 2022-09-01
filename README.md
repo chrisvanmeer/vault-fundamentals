@@ -177,10 +177,10 @@ Here are some code snippets that will help you guide the demo environment for th
      vault read sys/replication/dr/status
      vault write -f sys/replication/dr/primary/enable
      vault read sys/replication/dr/status
-     vault write -f sys/replication/dr/primary/secondary-token id=dr-repl01
+     vault write -f sys/replication/dr/primary/secondary-token id=repl01
      ```
 
-2. On `vault-fundamentals-repl-01`, perform the following:
+2. On `vrepl01`, perform the following:
 
      ```bash
      sudo service vault start && vault operator init -recovery-shares=1 -recovery-threshold=1 | tee vault.creds | awk '/Initial Root Token:/ { print $4 }' | vault login -
@@ -197,10 +197,10 @@ Here are some code snippets that will help you guide the demo environment for th
      vault read sys/replication/performance/status
      vault write -f sys/replication/performance/primary/enable
      vault read sys/replication/performance/status
-     vault write -f sys/replication/performance/primary/secondary-token id=pr-repl02
+     vault write -f sys/replication/performance/primary/secondary-token id=repl02
      ```
 
-2. On `vault-fundamentals-repl-02`, perform the following:
+2. On `vrepl02`, perform the following:
 
      ```bash
      sudo service vault start && vault operator init -recovery-shares=1 -recovery-threshold=1 | tee vault.creds | awk '/Initial Root Token:/ { print $4 }' | vault login -
@@ -211,21 +211,21 @@ Here are some code snippets that will help you guide the demo environment for th
 
 #### Disaster recovery - from Performance secondary ( Germany )
 
-1. On `vault-fundamentals-repl-02`, perform the following:
+1. On `vrepl02`, perform the following:
 
      ```bash
      vault read sys/replication/dr/status
      vault write -f sys/replication/dr/primary/enable
      vault read sys/replication/dr/status
-     vault write -f sys/replication/dr/primary/secondary-token id=dr-repl03
+     vault write -f sys/replication/dr/primary/secondary-token id=repl03
      ```
 
-2. On `vault-fundamentals-repl-03`, perform the following:
+2. On `vrepl03`, perform the following:
 
      ```bash
      sudo service vault start && vault operator init -recovery-shares=1 -recovery-threshold=1 | tee vault.creds | awk '/Initial Root Token:/ { print $4 }' | vault login -
      vault read sys/replication/dr/status
-     vault write -f sys/replication/dr/secondary/enable token=<token from `vnode01`>
+     vault write -f sys/replication/dr/secondary/enable token=<token from `vrepl02`>
      vault read sys/replication/dr/status
      ```
 
