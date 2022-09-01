@@ -16,6 +16,10 @@ Please note that
 - All Vault services will have to be started manually.
 - The EC2 instances for the 3-node Vault cluster will be provisioned with a specific tag to leverage the auto_join capabilities and is included in the config file.
 
+## Schematic overview
+
+![Schematic overview](vault-fundamentals-demo-environment.drawio.png)
+
 ## Pre-requisites
 
 **Follow the steps below.**
