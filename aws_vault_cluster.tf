@@ -5,8 +5,8 @@ resource "aws_instance" "vault_cluster" {
   vpc_security_group_ids = [aws_security_group.vault_sg.id]
   count                  = var.aws_instance_cluster_count
   tags = {
-    Name                         = "vnode${format("%02d", count.index + 1)}",
-    var.vault_aws_unseal_tag_key = var.vault_aws_unseal_tag_value
+    Name                              = "vnode${format("%02d", count.index + 1)}",
+    "${var.vault_aws_unseal_tag_key}" = var.vault_aws_unseal_tag_value
   }
 
   provisioner "file" {

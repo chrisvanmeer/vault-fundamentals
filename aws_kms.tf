@@ -6,7 +6,13 @@ resource "aws_key_pair" "key" {
 resource "aws_kms_key" "autounseal_key" {
   description             = "Vault Fundamentals auto unseal key"
   deletion_window_in_days = 7
-  policy                  = templatefile("kms-key-policy.json")
+  policy = templatefile(
+    "kms-key-policy.json",
+    {
+      aws_account_id = var.aws_account_id
+      aws_iam_user   = var.aws_iam_user
+    }
+  )
 }
 
 resource "aws_kms_alias" "autounseal_alias" {
