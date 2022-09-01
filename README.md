@@ -18,7 +18,7 @@ Please note that
 
 ## Schematic overview
 
-![Schematic overview](vault-fundamentals-demo-environment.drawio.png)
+![Schematic overview](vault-fundamentals-demo-environment.png)
 
 ## Pre-requisites
 
