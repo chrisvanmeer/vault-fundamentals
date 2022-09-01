@@ -1,8 +1,9 @@
 resource "aws_instance" "vault_replication" {
-  ami           = data.aws_ami.ubuntu.id
-  instance_type = var.aws_instance_type
-  key_name      = aws_key_pair.key.key_name
-  count         = var.aws_instance_replication_count
+  ami                    = data.aws_ami.ubuntu.id
+  instance_type          = var.aws_instance_type
+  key_name               = aws_key_pair.key.key_name
+  vpc_security_group_ids = [aws_security_group.vault_sg.id]
+  count                  = var.aws_instance_replication_count
   tags = {
     Name = "vrepl${format("%02d", count.index + 1)}",
   }
