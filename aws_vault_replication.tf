@@ -36,7 +36,7 @@ resource "aws_instance" "vault_replication" {
 
   provisioner "file" {
     content = templatefile(
-      var.vault_cluster_config_file_source,
+      var.vault_replication_config_file_source,
       {
         node_ip           = self.public_ip,
         raft_node_id      = self.tags.Name,
