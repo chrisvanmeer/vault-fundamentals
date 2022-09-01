@@ -6,7 +6,9 @@ The following resources will be deployed in AWS:
 
 - 1 SSH key-pair
 - 1 KMS key for auto-unseal
-- 1 Security Group allowing only inbound connections on tcp/8200, tcp/8201 and tcp/22.
+- 1 Security Group allowing
+  - Ingress tcp/8200, tcp/8201 and tcp/22
+  - Egress everything
 - 3 EC2 instances for an HA vault cluster (hostname `vnode##`)
 - 3 EC2 instances for replication purposes (hostname `vrepl##`)
 
