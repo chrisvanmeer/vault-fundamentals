@@ -39,5 +39,5 @@ terraform.rc
 # Ignore vault environment file
 vault.env
 
-# Ignore drawio temp file
-*.bkp
+# Ignore created vault-tmux bash file.
+vault-tmux.sh
