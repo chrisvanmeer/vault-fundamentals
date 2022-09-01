@@ -46,17 +46,21 @@ for i in *.example; do cp -a $i ${i%%.example}; done
 
 ### `terraform.tfvars`
 
-Please fill in the following data
+Please fill in the following data:
 
 - AWS Account ID
 - AWS IAM user
 
+This data will be used for the KMS inline key-policy that will act as our auto-unseal key.
+
 ### `vault.env`
 
-Please fill in the following data
+Please fill in the following data:
 
 - AWS Access Key ID
 - AWS Secret Access Key
+
+This file will be used by the Vault instances to leverage the auto-unseal mechanism.
 
 ### `vault.hclic`
 
