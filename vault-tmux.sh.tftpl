@@ -20,8 +20,8 @@ else
   tmux select-pane -T 'vrepl03'
   tmux select-window -t 2
   tmux select-pane -t 0
-  tmux send-keys -t 0 'ssh -o StrictHostKeyChecking=no ubuntu@${vrepl03}' C-m C-l
-  tmux send-keys -t 1 'ssh -o StrictHostKeyChecking=no ubuntu@${vrepl04}' C-m C-l
+  tmux send-keys -t 0 'ssh -o StrictHostKeyChecking=no ubuntu@${vrepl02}' C-m C-l
+  tmux send-keys -t 1 'ssh -o StrictHostKeyChecking=no ubuntu@${vrepl03}' C-m C-l
   tmux select-window -t 1
   tmux select-pane -t 0
   tmux send-keys -t 0 'ssh -o StrictHostKeyChecking=no ubuntu@${vnode02}' C-m C-l
