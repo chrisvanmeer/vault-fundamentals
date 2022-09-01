@@ -109,7 +109,13 @@ Here are some code snippets that will help you guide the demo environment for th
 1. On `vnode01`, perform the following:
 
    ```bash
-   sudo service vault start && vault operator init -recovery-shares=1 -recovery-threshold=1 | tee vault.creds | awk '/Initial Root Token:/ { print $4 }' | vault login -
+   sudo service vault start && vault operator init -recovery-shares=1 -recovery-threshold=1 | tee vault.creds
+   ```
+
+   Wait a few seconds.
+
+   ```bash
+   cat vault_creds | awk '/Initial Root Token:/ { print $4 }' | vault login -
    echo "Recovery Key for vnodes 2 and 3 is: " `awk '/Recovery Key 1/ { print $4 }' vault.creds`
    ```
 
@@ -188,9 +194,17 @@ Here are some code snippets that will help you guide the demo environment for th
 2. On `vrepl01`, perform the following:
 
      ```bash
-     sudo service vault start && vault operator init -recovery-shares=1 -recovery-threshold=1 | tee vault.creds | awk '/Initial Root Token:/ { print $4 }' | vault login -
+     sudo service vault start && vault operator init -recovery-shares=1 -recovery-threshold=1 | tee vault.creds
+     ```
+
+     Wait a few seconds.
+
+     ```bash
+     awk '/Initial Root Token:/ { print $4 }' | vault login -
      vault read sys/replication/dr/status
-     vault write -f sys/replication/dr/secondary/enable token=<token from vnode01>
+
+     export SECONDARY_TOKEN=<token from vnode01>
+     vault write -f sys/replication/dr/secondary/enable token=$SECONDARY_TOKEN
      vault read sys/replication/dr/status
      ```
 
@@ -208,9 +222,17 @@ Here are some code snippets that will help you guide the demo environment for th
 2. On `vrepl02`, perform the following:
 
      ```bash
-     sudo service vault start && vault operator init -recovery-shares=1 -recovery-threshold=1 | tee vault.creds | awk '/Initial Root Token:/ { print $4 }' | vault login -
+     sudo service vault start && vault operator init -recovery-shares=1 -recovery-threshold=1 | tee vault.creds
+     ```
+
+     Wait a few seconds.
+
+     ```bash
+     cat vault.creds | awk '/Initial Root Token:/ { print $4 }' | vault login -
      vault read sys/replication/performance/status
-     vault write -f sys/replication/performance/secondary/enable token=<token from vnode01>
+
+     export SECONDARY_TOKEN=<token from vnode01>
+     vault write -f sys/replication/performance/secondary/enable token=$SECONDARY_TOKEN
      vault read sys/replication/performance/status
      ```
 
@@ -228,9 +250,17 @@ Here are some code snippets that will help you guide the demo environment for th
 2. On `vrepl03`, perform the following:
 
      ```bash
-     sudo service vault start && vault operator init -recovery-shares=1 -recovery-threshold=1 | tee vault.creds | awk '/Initial Root Token:/ { print $4 }' | vault login -
+     sudo service vault start && vault operator init -recovery-shares=1 -recovery-threshold=1 | tee vault.creds
+     ```
+
+     Wait a few seconds.
+
+     ```bash
+     cat vault.creds | awk '/Initial Root Token:/ { print $4 }' | vault login -
      vault read sys/replication/dr/status
-     vault write -f sys/replication/dr/secondary/enable token=<token from vrepl02>
+
+     export SECONDARY_TOKEN=<token from vrepl02>
+     vault write -f sys/replication/dr/secondary/enable token=$SECONDARY_TOKEN
      vault read sys/replication/dr/status
      ```
 
