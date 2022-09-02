@@ -6,7 +6,7 @@ resource "aws_instance" "vault_cluster" {
   count                  = var.aws_instance_cluster_count
   tags = {
     Name                              = "vnode${format("%02d", count.index + 1)}",
-    "${var.vault_aws_unseal_tag_key}" = var.vault_aws_unseal_tag_value
+    "${var.vault_aws_unseal_tag_key}" = var.vault_aws_unseal_tag_value # tflint-ignore: terraform_deprecated_interpolation
   }
 
   provisioner "file" {
