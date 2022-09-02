@@ -6,9 +6,7 @@ The following resources will be deployed in AWS:
 
 - 1 SSH key-pair
 - 1 KMS key for auto-unseal
-- 1 Security Group allowing
-  - Ingress tcp/8200, tcp/8201 and tcp/22
-  - Egress everything
+- 1 Security Group allowing only inbound connections on tcp/8200, tcp/8201 and tcp/22.
 - 3 EC2 instances for an HA vault cluster (hostname `vnode##`)
 - 3 EC2 instances for replication purposes (hostname `vrepl##`)
 
@@ -106,7 +104,9 @@ bash vault-tmux.sh
 
 Here are some code snippets that will help you guide the demo environment for the following purposes
 
-### HA
+### Part I - Building a fault tolerant Vault setup
+
+#### HA
 
 1. On `vnode01`, perform the following:
 
@@ -136,17 +136,9 @@ Here are some code snippets that will help you guide the demo environment for th
      vault operator raft list-peers
      ```
 
-### Populate
+#### Populate
 
 1. On `vnode01`, perform the following:
-
-     ```bash
-     vault policy write consultants-policy -<<EOF
-     path "kv/data/consultants" {
-       capabilities = ["read"]
-     }
-     EOF
-     ```
 
      ```bash
      vault policy write admin-policy -<<EOF
@@ -188,9 +180,9 @@ Here are some code snippets that will help you guide the demo environment for th
      vault kv put kv/consultants @payload.json
      ```
 
-### Replication
+#### Replication
 
-#### Disaster recovery ( Netherlands )
+##### Disaster recovery ( Netherlands )
 
 1. On `vnode01`, perform the following:
 
@@ -218,7 +210,7 @@ Here are some code snippets that will help you guide the demo environment for th
      vault read sys/replication/dr/status
      ```
 
-#### Performance replication ( Germany )
+##### Performance replication ( Germany )
 
 1. On `vnode01`, perform the following:
 
@@ -246,7 +238,7 @@ Here are some code snippets that will help you guide the demo environment for th
      vault read sys/replication/performance/status
      ```
 
-#### Disaster recovery - from Performance secondary ( Germany )
+##### Disaster recovery - from Performance secondary ( Germany )
 
 1. On `vrepl02`, perform the following:
 
@@ -273,6 +265,38 @@ Here are some code snippets that will help you guide the demo environment for th
      vault write -f sys/replication/dr/secondary/enable token=$SECONDARY_TOKEN
      vault read sys/replication/dr/status
      ```
+
+### Part II - Using the AppRole method to retrieve secrets
+
+1. On `vnode01`, perform the following:
+
+     First, write a policy that allows access to the consultants secret created earlier.
+
+     ```bash
+     vault policy write consultants-policy -<<EOF
+     path "kv/data/consultants" {
+       capabilities = ["read"]
+     }
+     EOF
+     ```
+
+2. Enable the auth method and writing the role (still on `vnode01`).
+
+     ```bash
+     vault auth enable approle
+     vault write -f auth/approle/role/consultants policies=consultants-policy
+     ```
+
+3. Then retrieve the relevant data (still on `vnode01`).
+
+     ```bash
+     vault read auth/approle/role/consultants/role-id
+     vault write -f auth/approle/role/consultants/secret-id
+     vault operator raft list-peers | awk '/leader/ {print $2}' | sed 's/.$/0/'
+     ```
+
+4. Visit <https://hashilab.nl/vault>, go to the settings (wrench icon) and fill in the data retrieved at step 4.
+5. Use the back arrow button to go to the main page and see if there are any results.
 
 ## Destroy infrastructure
 
