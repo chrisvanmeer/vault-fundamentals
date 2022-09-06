@@ -8,13 +8,15 @@ if has-session ; then
   echo "Session already exists"
 else
   tmux new-session -d -s vault
-  tmux rename-window -t 0 'active'
+  tmux rename-window -t 0 'active / replication'
   tmux select-pane -T 'vnode01'
-  tmux new-window -n 'standby'
+  tmux split-window -h
+  tmux select-pane -T 'vrepl01'
+  tmux new-window -n 'standby nodes'
   tmux select-pane -T 'vnode02'
   tmux split-window -h
   tmux select-pane -T 'vnode03'
-  tmux new-window -n 'replication'
+  tmux new-window -n 'replication nodes'
   tmux select-pane -T 'vrepl02'
   tmux split-window -h
   tmux select-pane -T 'vrepl03'
@@ -28,6 +30,8 @@ else
   tmux send-keys -t 1 'ssh -o StrictHostKeyChecking=no ubuntu@${vnode03}' C-m C-l
   tmux set-window-option synchronize-panes on > /dev/null
   tmux select-window -t 0
+  tmux send-keys -t 1 'ssh -o StrictHostKeyChecking=no ubuntu@${vrepl01}' C-m C-l
   tmux send-keys -t 0 'ssh -o StrictHostKeyChecking=no ubuntu@${vnode01}' C-m C-l
+  tmux list-panes -F '#F' | grep -q Z || tmux resize-pane -Z
   tmux attach-session -d
 fi
