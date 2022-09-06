@@ -155,9 +155,9 @@ Here are some code snippets that will help you guide the demo environment for th
 
      After stepping down, there is a new leader election and you will see that another node will assume the role of the Active node.
 
-#### Populate
+#### Replication
 
-For the subsequent parts of the demo, we will populate our newly created HA cluster with some policies, some auth methods and some secrets.
+##### Pre-requisite policy
 
 1. On `vnode01`, perform the following:
 
@@ -176,8 +176,6 @@ For the subsequent parts of the demo, we will populate our newly created HA clus
      vault auth enable userpass
      vault write auth/userpass/users/admin policies=admin-policy password=vault
      ```
-
-#### Replication
 
 ##### Disaster recovery ( Netherlands )
 
@@ -265,6 +263,7 @@ For the subsequent parts of the demo, we will populate our newly created HA clus
 
 ### Part II - Using the AppRole method to retrieve secrets
 
+For the subsequent parts of this demo, we will populate our newly created HA cluster with another policy, the approle auth methods and a secret.  
 All these steps should be performed on `vnode01`.
 
 1. First, lets create some data that we will store in a secret.
