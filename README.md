@@ -1,7 +1,10 @@
 # Vault Fundamentals
 
 This repository is to deploy a demo environment for the Vault Fundamentals training / workshop.  
-For this demo environment, **a valid Vault Enterprise license key is needed** since this demo includes Enterprise features.  
+To use the entire demo environment, **a valid Vault Enterprise license key is needed** since this demo includes Enterprise features.
+
+If you don't have a Vault Enterprise license, you can specify the `vault_binary_name` variable with the value `vault` (the default is `vault-enterprise`) in the `terraform.tfvars` file. Note that if you use the open source version of Vault, you cannot perform the Replication part of this demo.
+
 The following resources will be deployed in AWS:
 
 - 1 SSH key-pair
@@ -66,7 +69,7 @@ This file will be used by the Vault instances to leverage the auto-unseal mechan
 
 ### `vault.hclic`
 
-Please paste your Vault Enterprise license string into this file.
+Please paste your Vault Enterprise license string into this file when using the Vault Enterprise binary.
 
 ## Deploy infrastructure
 
