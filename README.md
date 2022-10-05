@@ -1,6 +1,11 @@
 # Vault Fundamentals
 
-This repository is to deploy a demo environment for the Vault Fundamentals training / workshop.  
+This repository is to deploy a demo environment on AWS for the Vault Fundamentals training / workshop.  
+  
+Needless to say, you will need a valid AWS account.  
+Please make sure you have your AWS credentials set as environment variables.  
+See [this document](https://docs.aws.amazon.com/sdk-for-php/v3/developer-guide/guide_credentials_environment.html) for more instructions on how to do that.
+  
 To use the entire demo environment, **a valid Vault Enterprise license key is needed** since this demo includes Enterprise features.
 
 If you don't have a Vault Enterprise license, you can specify the `vault_binary_name` variable with the value `vault` (the default is `vault-enterprise`) in the `terraform.tfvars` file. Note that if you use the open source version of Vault, you cannot perform the Replication part of this demo.
