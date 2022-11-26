@@ -8,7 +8,8 @@ See [this document](https://docs.aws.amazon.com/sdk-for-php/v3/developer-guide/g
   
 To use the entire demo environment, **a valid Vault Enterprise license key is needed** since this demo includes Enterprise features.
 
-If you don't have a Vault Enterprise license, you can specify the `vault_binary_name` variable with the value `vault` (the default is `vault-enterprise`) in the `terraform.tfvars` file. Note that if you use the open source version of Vault, you cannot perform the Replication part of this demo.
+If you don't have a Vault Enterprise license, you can specify the `vault_binary_name` variable with the value `vault` (the default is `vault-enterprise`) in the `terraform.tfvars` file.  
+Note that if you use the open source version of Vault, you cannot perform the Replication part of this demo.
 
 The following resources will be deployed in AWS:
 
@@ -27,9 +28,13 @@ Please note that
 - All Vault services will have to be started manually.
 - The EC2 instances for the 3-node Vault cluster will be provisioned with a specific tag to leverage the auto_join capabilities and is included in the config file.
 
+---
+
 ## Schematic overview
 
 ![Schematic overview](vault-fundamentals-schematic-overview.png)
+
+---
 
 ## Pre-requisites
 
@@ -76,6 +81,8 @@ This file will be used by the Vault instances to leverage the auto-unseal mechan
 
 Please paste your Vault Enterprise license string into this file when using the Vault Enterprise binary.
 
+---
+
 ## Deploy infrastructure
 
 ```bash
@@ -111,7 +118,7 @@ bash vault-tmux.sh
        vnode01 will be full screen at start
 ```
 
-****
+---
 
 ## Demo guidelines
 
@@ -163,6 +170,8 @@ Here are some code snippets that will help you guide the demo environment for th
 
      After stepping down, there is a new leader election and you will see that another node will assume the role of the Active node.
 
+---
+
 #### Replication
 
 ##### Pre-requisite policy
@@ -184,6 +193,8 @@ Here are some code snippets that will help you guide the demo environment for th
      vault auth enable userpass
      vault write auth/userpass/users/admin policies=admin-policy password=vault
      ```
+
+---
 
 ##### Disaster recovery ( Netherlands )
 
@@ -213,6 +224,8 @@ Here are some code snippets that will help you guide the demo environment for th
      vault read sys/replication/dr/status
      ```
 
+---
+
 ##### Performance replication ( Germany )
 
 1. On `vnode01`, perform the following:
@@ -241,6 +254,8 @@ Here are some code snippets that will help you guide the demo environment for th
      vault read sys/replication/performance/status
      ```
 
+---
+
 ##### Disaster recovery - from Performance secondary ( Germany )
 
 1. On `vrepl02`, perform the following:
@@ -268,6 +283,8 @@ Here are some code snippets that will help you guide the demo environment for th
      vault write -f sys/replication/dr/secondary/enable token=$SECONDARY_TOKEN
      vault read sys/replication/dr/status
      ```
+
+---
 
 ### Part II - Using the AppRole method to retrieve secrets
 
@@ -301,6 +318,8 @@ All these steps should be performed on `vnode01`.
      EOF
      ```
 
+---
+
 2. Next, we will enable a (versioned) k/v secrets engine and generate a secret with the data created in step 1.
 
      ```bash
@@ -325,6 +344,8 @@ All these steps should be performed on `vnode01`.
      EOF
      ```
 
+---
+
 5. The only thing left to do on the cluster is to get all the relevant data for the web application.
 
      First, read and note the Role ID.
@@ -347,6 +368,8 @@ All these steps should be performed on `vnode01`.
 
 6. Visit <https://hashilab.nl/vault>, go to the settings (wrench icon) and fill in the data retrieved at step 5.
 7. Use the back arrow button to go to the main page and see if there are any results.
+
+---
 
 ## Destroy infrastructure
 
