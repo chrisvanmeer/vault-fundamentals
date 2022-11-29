@@ -1,0 +1,39 @@
+---
+- name: Clean up Vault demo instances.
+  hosts: all
+  become: true
+
+  tasks:
+    - name: Clean local known hosts file.
+      ansible.builtin.known_hosts:
+        path: ~/.ssh/known_hosts
+        name: "{{ item }}"
+        state: absent
+      with_items: "{{ groups['all'] }}"
+      delegate_to: localhost
+      become: false
+
+    - name: Ensure Vault is stopped.
+      ansible.builtin.service:
+        name: vault
+        state: stopped
+
+    - name: Ensure creds are removed.
+      ansible.builtin.file:
+        path: /home/ubuntu/vault.creds
+        state: absent
+
+    - name: Get directory listing.
+      ansible.builtin.find:
+        path: /opt/vault/data/
+        file_type: any
+        hidden: yes
+      register: directory_content_result
+
+    - name: Remove directory content.
+      ansible.builtin.file:
+        path: "{{ item.path }}"
+        state: absent
+      with_items: "{{ directory_content_result.files }}"
+      loop_control:
+        label: "{{ item.path }}"
