@@ -64,9 +64,12 @@ resource "aws_instance" "vault_replication" {
       "sudo mv ${var.vault_enterprise_license_destination} /etc/vault.d/vault.hclic",
       "sudo mv ${var.vault_env_file_destination} /etc/vault.d/vault.env",
       "sudo mv ${var.vault_config_file_destination} /etc/vault.d/vault.hcl",
-      "sudo chown vault:vault /etc/vault.d/vault.{env,hclic}",
-      "sudo chmod 600 /etc/vault.d/vault.{env,hclic}",
-      "echo 'export VAULT_ADDR=\"http://127.0.0.1:8200\"' > /etc/profile.d/vault.sh"
+      "sudo chown vault:vault /etc/vault.d/vault.env",
+      "sudo chown vault:vault /etc/vault.d/vault.hclic",
+      "sudo chmod 600 /etc/vault.d/vault.env",
+      "sudo chmod 600 /etc/vault.d/vault.hclic",
+      "echo \"export VAULT_ADDR=http://127.0.0.1:8200\" | sudo tee /etc/profile.d/vault.sh",
+      "touch /home/ubuntu/.hushlogin"
     ]
 
     connection {
