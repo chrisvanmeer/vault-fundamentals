@@ -12,6 +12,7 @@
       with_items: "{{ groups['all'] }}"
       delegate_to: localhost
       become: false
+      tags: known_hosts
 
     - name: Ensure Vault is stopped.
       ansible.builtin.service:
