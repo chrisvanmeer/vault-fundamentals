@@ -2,6 +2,7 @@
 - name: Clean up Vault demo instances.
   hosts: all
   become: true
+  gather_facts: false
 
   tasks:
     - name: Clean local known hosts file.
@@ -12,6 +13,7 @@
       with_items: "{{ groups['all'] }}"
       delegate_to: localhost
       become: false
+      run_once: true
       tags: known_hosts
 
     - name: Ensure Vault is stopped.
