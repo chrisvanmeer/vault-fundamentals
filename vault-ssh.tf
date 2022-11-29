@@ -1,4 +1,4 @@
-resource "local_file" "tmux" {
+resource "local_file" "ssh-config" {
   content = templatefile("vault-ssh-config.tftpl",
     {
       vnode01  = aws_instance.vault_cluster[0].public_dns
