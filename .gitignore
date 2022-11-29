@@ -41,3 +41,6 @@ vault.env
 
 # Ignore created vault-tmux bash file.
 vault-tmux.sh
+
+# Ignore created ssh config file.
+ssh.config
